@@ -9,6 +9,15 @@ const getAllPosts = async (req, res) => {
     console.log(err);
   }
 };
+
+const getById = async (req, res) => {
+  try {
+    const posts = await Post.findById({_id:id});
+    res.status(201).json({ posts });
+  } catch (err) {
+    console.log(err);
+  }
+};
 const createPost = async (req, res) => {
   try {
     //find user id that he is going to post
@@ -52,4 +61,4 @@ const deletePost = async (req, res) => {
     res.status(500).send({ msg: "Internal server error" });
   }
 };
-module.exports={getAllPosts,createPost,updatePost,deletePost}
+module.exports={getAllPosts,getById,createPost,updatePost,deletePost}

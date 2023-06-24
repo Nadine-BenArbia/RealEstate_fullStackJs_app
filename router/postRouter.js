@@ -4,16 +4,18 @@ const {
   deletePost,
   updatePost,
   createPost,
+  getById
 } = require("../controler/postControler");
 // const isAuth = require("../middelwear/isAuth");
 
 const router = express.Router();
 
 //test
-router.get("/test", (req, res) => {
-  res.send("hello");
-});
+// router.get("/test", (req, res) => {
+//   res.send("hello");
+// });
 router.get("/posts", getAllPosts);
+router.get("/posts/:id",getById)
 router.post("/post/:id", createPost);
 router.delete("/:id", deletePost);
 router.put("/:id", updatePost);
