@@ -8,7 +8,13 @@ const postSchema = new mongoose.Schema({
     location: String,
     availableAt:Date,
     price:Number,
-    category:[String],
+    room:Number,
+    bathrooms:Number,
+    status: {
+      type: String,
+      enum: ['For Sale', 'Pending', 'Sold'],
+      default:"For sale"
+    },
     user:{type:mongoose.Types.ObjectId ,ref:'User'}
 
 })

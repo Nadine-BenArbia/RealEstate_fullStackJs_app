@@ -32,15 +32,15 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = register;
+
 
 
 const login= async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Check if the user exists
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
@@ -54,7 +54,7 @@ const login= async (req, res) => {
     // Set the user's role in the session
     req.session.role = user.role;
 
-    res.json({ message: 'Logged in successfully' });
+    res.json({ user });
   } catch (err) {
     res.status(500).json({ message: 'Internal server error' });
   }

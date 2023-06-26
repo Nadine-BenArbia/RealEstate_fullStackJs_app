@@ -16,7 +16,7 @@ const router = express.Router();
 // });
 router.get("/posts", getAllPosts);
 router.get("/posts/:id",getById)
-router.post("/post/:id", createPost);
+router.post("/post", createPost);
 router.delete("/:id", deletePost);
 router.put("/:id", updatePost);
 

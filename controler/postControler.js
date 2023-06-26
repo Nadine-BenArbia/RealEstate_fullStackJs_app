@@ -12,30 +12,29 @@ const getAllPosts = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const posts = await Post.findById({_id:id});
-    res.status(201).json({ posts });
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+    res.status(200).json({ post });
   } catch (err) {
     console.log(err);
+    res.status(500).json(err);
   }
 };
+
 const createPost = async (req, res) => {
   try {
-    //find user id that he is going to post
-    const findUser = await User.find({ _id:req.params.id });
-    if (!findUser) {
-      return res.status(403).send("user not found");
-    }
-    console.log('id',findUser[0])
-    //create new post
-    req.body.user=(findUser[0])
-    const newPost = Post.create(req.body);
-    
-    res.status(201).send("posted succ");
+    const newPost = await Post.create(req.body);
+    res.status(201).send({newPost});
   } catch (err) {
     console.log(err);
-    res.status(500).json(err)
+    res.status(500).json(err);
   }
 };
+
+
 const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -43,7 +42,7 @@ const updatePost = async (req, res) => {
     await Post.updateOne({ _id: id }, { $set: { ...req.body } });
     res.send({ msg: "updated succ" });
   } catch (error) {
-    res.status(400).send({ msg: "can not update" });
+    res.status(400).json(error);
   }
 };
 const deletePost = async (req, res) => {
